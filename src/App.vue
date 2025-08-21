@@ -1,18 +1,17 @@
 <script setup>
 import JSONLab from '@/components/JSONLab.vue'
 import LoginForm from '@/components/LoginForm.vue'
-
 </script>
 
 <template>
-  <div id="app">
+  <div class="app-container">
     <JSONLab />
     <LoginForm />
   </div>
 </template>
 
 <style scoped>
-#app {
+.app-container {
   margin: 0;
   padding: 0;
   min-height: 100vh;
