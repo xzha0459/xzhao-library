@@ -5,7 +5,7 @@ import LoginForm from '@/components/LoginForm.vue'
 
 <template>
   <div class="app-container">
-    <JSONLab />
+<!--    <JSONLab />-->
     <LoginForm />
   </div>
 </template>
