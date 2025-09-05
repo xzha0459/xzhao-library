@@ -1,21 +1,62 @@
 <template>
-  <!-- Using Bootstrap's Header template (starter code) -->
-  <!-- https://getbootstrap.com/docs/5.0/examples/headers/ -->
   <div class="container">
-    <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active" aria-current="page"
-            >Home (Week 5)</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link to="/about" class="nav-link" active-class="active">About</router-link>
-        </li>
-      </ul>
+    <header class="d-flex justify-content-between align-items-center py-3">
+      <div class="nav nav-pills">
+        <router-link to="/" class="nav-link" active-class="active">Home (Week 5)</router-link>
+        <router-link v-if="isAuthenticated" to="/about" class="nav-link" active-class="active">About</router-link>
+      </div>
+
+      <div v-if="isAuthenticated" class="d-flex align-items-center">
+        <span class="me-3">Welcome, {{ username }}!</span>
+        <button @click="logout" class="btn btn-outline-danger btn-sm">Logout</button>
+      </div>
+      <div v-else>
+        <router-link to="/login" class="btn btn-primary btn-sm">Login</router-link>
+      </div>
     </header>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const isAuthenticated = ref(false)
+const username = ref('')
+
+const checkAuth = () => {
+  isAuthenticated.value = localStorage.getItem('isAuthenticated') === 'true'
+  username.value = localStorage.getItem('username') || ''
+}
+
+const logout = () => {
+  localStorage.removeItem('isAuthenticated')
+  localStorage.removeItem('username')
+  isAuthenticated.value = false
+  username.value = ''
+  router.push('/login')
+}
+
+onMounted(() => {
+  checkAuth()
+  // Listen for storage changes (when login happens in another tab)
+  window.addEventListener('storage', checkAuth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('storage', checkAuth)
+})
+
+// Also check auth when component updates
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+watch(route, () => {
+  checkAuth()
+}, { immediate: true })
+</script>
 
 <style scoped>
 .b-example-divider {
