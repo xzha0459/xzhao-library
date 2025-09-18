@@ -1,6 +1,19 @@
 // import './assets/main.css'
 // import '@/assets/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyChAKWzhY0wtzZ1RMfBg3zEZPDnXEMfBt0",
+  authDomain: "fit5032-week-6-204c9.firebaseapp.com",
+  projectId: "fit5032-week-6-204c9",
+  storageBucket: "fit5032-week-6-204c9.firebasestorage.app",
+  messagingSenderId: "917107337890",
+  appId: "1:917107337890:web:dc3f4a09fc2637c70f45fb"
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 import { createApp } from 'vue'
 import App from './App.vue'

@@ -4,6 +4,8 @@
       <div class="nav nav-pills">
         <router-link to="/" class="nav-link" active-class="active">Home (Week 5)</router-link>
         <router-link v-if="isAuthenticated" to="/about" class="nav-link" active-class="active">About</router-link>
+        <router-link to="/FireLogin" class="nav-link" active-class="active">Firebase Login</router-link>
+        <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
       </div>
 
       <div v-if="isAuthenticated" class="d-flex align-items-center">
