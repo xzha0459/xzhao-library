@@ -49,6 +49,6 @@ export default {
 
     return { isbn, name, addBook };
   },
-  // components: { BookList }
+  components: { BookList }
 }
 </script>

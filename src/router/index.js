@@ -28,10 +28,9 @@ const routes = [
     component: FirebaseRegisterView
   },
   {
-    path: '/add-book',
+    path: '/addbook',
     name: 'AddBook',
-    component: AddBookView,
-    meta: { requiresAuth: true }
+    component: AddBookView
   },
   {
     path: '/about',

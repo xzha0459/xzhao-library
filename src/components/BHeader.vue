@@ -4,7 +4,7 @@
       <div class="nav nav-pills">
         <router-link to="/" class="nav-link" active-class="active">Home (Week 5)</router-link>
         <router-link v-if="isAuthenticated" to="/about" class="nav-link" active-class="active">About</router-link>
-        <router-link v-if="isAuthenticated" to="/add-book" class="nav-link" active-class="active">Add Book</router-link>
+        <router-link v-if="isAuthenticated" to="/addbook" class="nav-link" active-class="active">Add Book</router-link>
         <router-link to="/FireLogin" class="nav-link" active-class="active">Firebase Login</router-link>
         <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
       </div>
