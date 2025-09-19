@@ -20,6 +20,9 @@ const register = () => {
   createUserWithEmailAndPassword (auth, email.value, password.value)
   .then((data) => {
     console.log("Firebase Register Successful!")
+    console.log("New user created:", auth.currentUser)
+    console.log("User email:", auth.currentUser?.email)
+    console.log("User UID:", auth.currentUser?.uid)
     router.push("/FireLogin")
   })
   .catch((error) => {

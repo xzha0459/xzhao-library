@@ -4,6 +4,7 @@
       <div class="nav nav-pills">
         <router-link to="/" class="nav-link" active-class="active">Home (Week 5)</router-link>
         <router-link v-if="isAuthenticated" to="/about" class="nav-link" active-class="active">About</router-link>
+        <router-link v-if="isAuthenticated" to="/add-book" class="nav-link" active-class="active">Add Book</router-link>
         <router-link to="/FireLogin" class="nav-link" active-class="active">Firebase Login</router-link>
         <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
       </div>
@@ -22,32 +23,66 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 
 const router = useRouter()
+const auth = getAuth()
 const isAuthenticated = ref(false)
 const username = ref('')
 
 const checkAuth = () => {
-  isAuthenticated.value = localStorage.getItem('isAuthenticated') === 'true'
-  username.value = localStorage.getItem('username') || ''
+  // Check Firebase auth state
+  const user = auth.currentUser
+  if (user) {
+    isAuthenticated.value = true
+    username.value = user.email || user.displayName || 'User'
+  } else {
+    isAuthenticated.value = false
+    username.value = ''
+  }
 }
 
-const logout = () => {
-  localStorage.removeItem('isAuthenticated')
-  localStorage.removeItem('username')
-  isAuthenticated.value = false
-  username.value = ''
-  router.push('/login')
+const logout = async () => {
+  try {
+    // Log current user before logout
+    const currentUser = auth.currentUser
+    console.log('Current user before logout:', currentUser)
+    console.log('User email:', currentUser?.email)
+    console.log('User UID:', currentUser?.uid)
+    console.log('User display name:', currentUser?.displayName)
+
+    await signOut(auth)
+    console.log('Firebase logout successful!')
+    console.log('User logged out successfully')
+
+    isAuthenticated.value = false
+    username.value = ''
+    router.push('/FireLogin')
+  } catch (error) {
+    console.error('Logout error:', error)
+  }
 }
+
+let unsubscribeAuth = null
 
 onMounted(() => {
   checkAuth()
-  // Listen for storage changes (when login happens in another tab)
-  window.addEventListener('storage', checkAuth)
+  // Listen for Firebase auth state changes
+  unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isAuthenticated.value = true
+      username.value = user.email || user.displayName || 'User'
+    } else {
+      isAuthenticated.value = false
+      username.value = ''
+    }
+  })
 })
 
 onUnmounted(() => {
-  window.removeEventListener('storage', checkAuth)
+  if (unsubscribeAuth) {
+    unsubscribeAuth()
+  }
 })
 
 // Also check auth when component updates

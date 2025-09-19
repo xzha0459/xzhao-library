@@ -19,9 +19,12 @@ const auth = getAuth()
 const signin = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
   .then((data) => {
-    console.log("Firebase Register Successful!")
+    console.log("Firebase Sign In Successful!")
+    console.log("Current user after login:", auth.currentUser)
+    console.log("User email:", auth.currentUser?.email)
+    console.log("User UID:", auth.currentUser?.uid)
+    console.log("User display name:", auth.currentUser?.displayName)
     router.push("/")
-    console.log(auth.currentUser)
   })
   .catch((error) => {
     console.log(error.code);
