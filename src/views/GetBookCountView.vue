@@ -20,7 +20,7 @@ export default {
   methods: {
     async getBookCount() {
       try {
-        const response = await axios.get('<<YOUR_CLOUD_FUNCTION_URL>>')
+        const response = await axios.get('https://countbooks-gwvncnqs2q-uc.a.run.app')
         this.count = response?.data?.count ?? null
         this.error = null
       } catch (error) {
