@@ -7,6 +7,7 @@
         <router-link v-if="isAuthenticated" to="/addbook" class="nav-link" active-class="active">Add Book</router-link>
         <router-link v-if="isAuthenticated" to="/GetBookCount" class="nav-link" active-class="active">Get Book Count</router-link>
         <router-link v-if="isAuthenticated" to="/WeatherCheck" class="nav-link" active-class="active">Get Weather</router-link>
+        <router-link v-if="isAuthenticated" to="/CountBookAPI" class="nav-link" active-class="active">Count Book API</router-link>
         <router-link to="/FireLogin" class="nav-link" active-class="active">Firebase Login</router-link>
         <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
       </div>
