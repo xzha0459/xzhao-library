@@ -45,6 +45,21 @@ exports.countBooks = onRequest((req, res) => {
   });
 });
 
+// Return full list of books as JSON array
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await admin.firestore().collection("books").get()
+      const books = []
+      snapshot.forEach((doc) => books.push({ id: doc.id, ...doc.data() }))
+      res.status(200).send(books)
+    } catch (error) {
+      console.error("Error getting all books:", error?.message || error)
+      res.status(500).send("Error getting all books")
+    }
+  })
+})
+
 // Capitalize all string fields when a doc is created or updated (idempotent)
 exports.capitalizeBook = onDocumentWritten("books/{docId}", async (event) => {
   const afterSnap = event.data?.after;
